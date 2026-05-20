@@ -333,3 +333,22 @@ p{
   border-radius:10px;
 
 }
+
+.chat-video{
+
+  margin-top:10px;
+
+  max-width:350px;
+
+  border-radius:10px;
+
+}
+
+
+audio{
+
+  margin-top:10px;
+
+  width:300px;
+
+}

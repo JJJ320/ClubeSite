@@ -28,18 +28,6 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import {
-
-  getStorage,
-
-  ref,
-
-  uploadBytes,
-
-  getDownloadURL
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
 
 
 const firebaseConfig = {
@@ -67,8 +55,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const db = getFirestore(app);
-
-const storage = getStorage(app);
 
 
 
@@ -106,13 +92,53 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+async function uploadToCloudinary(file){
+
+  const formData = new FormData();
+
+
+
+  formData.append("file", file);
+
+  formData.append("upload_preset", "chat_upload");
+
+
+
+  const response = await fetch(
+
+    "https://api.cloudinary.com/v1_1/dlmrbca0i/auto/upload",
+
+    {
+
+      method: "POST",
+
+      body: formData
+
+    }
+
+  );
+
+
+
+  const data = await response.json();
+
+
+
+  return data.secure_url;
+
+}
+
+
+
 sendBtn.addEventListener("click", async () => {
 
   if(!currentUser) return;
 
 
 
-  let imageUrl = "";
+  let fileUrl = "";
+
+  let fileType = "";
 
 
 
@@ -122,21 +148,11 @@ sendBtn.addEventListener("click", async () => {
 
 
 
-    const storageRef = ref(
-
-      storage,
-
-      "chat-images/" + Date.now() + "-" + file.name
-
-    );
+    fileUrl = await uploadToCloudinary(file);
 
 
 
-    await uploadBytes(storageRef, file);
-
-
-
-    imageUrl = await getDownloadURL(storageRef);
+    fileType = file.type;
 
   }
 
@@ -150,7 +166,9 @@ sendBtn.addEventListener("click", async () => {
 
     text: input.value,
 
-    image: imageUrl,
+    file: fileUrl,
+
+    type: fileType,
 
     createdAt: Date.now()
 
@@ -188,11 +206,74 @@ onSnapshot(q, (snapshot) => {
 
 
 
+    let mediaHTML = "";
+
+
+
+    if(data.file){
+
+      if(data.type.startsWith("image")){
+
+        mediaHTML = `
+
+          <img
+            class="chat-image"
+            src="${data.file}"
+          >
+
+        `;
+
+      }
+
+
+
+      else if(data.type.startsWith("audio")){
+
+        mediaHTML = `
+
+          <audio controls>
+
+            <source src="${data.file}">
+
+          </audio>
+
+        `;
+
+      }
+
+
+
+      else if(data.type.startsWith("video")){
+
+        mediaHTML = `
+
+          <video
+            controls
+            class="chat-video"
+          >
+
+            <source src="${data.file}">
+
+          </video>
+
+        `;
+
+      }
+
+    }
+
+
+
     messagesDiv.innerHTML += `
 
       <div class="message">
 
-        <img class="profile-pic" src="${data.photo}">
+        <img
+          class="profile-pic"
+          src="${data.photo}"
+        >
+
+
 
         <div>
 
@@ -202,14 +283,7 @@ onSnapshot(q, (snapshot) => {
 
 
 
-          ${data.image ? `
-
-            <img
-              class="chat-image"
-              src="${data.image}"
-            >
-
-          ` : ""}
+          ${mediaHTML}
 
         </div>
 
