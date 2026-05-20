@@ -249,3 +249,87 @@ p{
   font-size:16px;
 
 }
+
+.chat-container{
+
+  padding:30px;
+
+}
+
+
+#messages{
+
+  margin-top:20px;
+
+  height:500px;
+
+  overflow-y:auto;
+
+  background:#1a1a1a;
+
+  padding:20px;
+
+  border-radius:15px;
+
+}
+
+
+.message{
+
+  display:flex;
+
+  gap:15px;
+
+  margin-bottom:20px;
+
+  align-items:flex-start;
+
+}
+
+
+.profile-pic{
+
+  width:50px;
+
+  height:50px;
+
+  border-radius:50%;
+
+}
+
+
+.chat-input{
+
+  display:flex;
+
+  gap:10px;
+
+  margin-top:20px;
+
+}
+
+
+.chat-input input[type="text"]{
+
+  flex:1;
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  font-size:16px;
+
+}
+
+
+.chat-image{
+
+  margin-top:10px;
+
+  max-width:300px;
+
+  border-radius:10px;
+
+}

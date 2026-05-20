@@ -28,6 +28,18 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+
+  getStorage,
+
+  ref,
+
+  uploadBytes,
+
+  getDownloadURL
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 
 
 const firebaseConfig = {
@@ -56,6 +68,8 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
+const storage = getStorage(app);
+
 
 
 const messagesDiv = document.getElementById("messages");
@@ -63,6 +77,8 @@ const messagesDiv = document.getElementById("messages");
 const input = document.getElementById("messageInput");
 
 const sendBtn = document.getElementById("sendBtn");
+
+const imageInput = document.getElementById("imageInput");
 
 
 
@@ -92,9 +108,37 @@ onAuthStateChanged(auth, (user) => {
 
 sendBtn.addEventListener("click", async () => {
 
-  if(!input.value) return;
-
   if(!currentUser) return;
+
+
+
+  let imageUrl = "";
+
+
+
+  if(imageInput.files[0]){
+
+    const file = imageInput.files[0];
+
+
+
+    const storageRef = ref(
+
+      storage,
+
+      "chat-images/" + Date.now() + "-" + file.name
+
+    );
+
+
+
+    await uploadBytes(storageRef, file);
+
+
+
+    imageUrl = await getDownloadURL(storageRef);
+
+  }
 
 
 
@@ -106,6 +150,8 @@ sendBtn.addEventListener("click", async () => {
 
     text: input.value,
 
+    image: imageUrl,
+
     createdAt: Date.now()
 
   });
@@ -113,6 +159,8 @@ sendBtn.addEventListener("click", async () => {
 
 
   input.value = "";
+
+  imageInput.value = "";
 
 });
 
@@ -144,13 +192,24 @@ onSnapshot(q, (snapshot) => {
 
       <div class="message">
 
-        <img src="${data.photo}">
+        <img class="profile-pic" src="${data.photo}">
 
         <div>
 
           <strong>${data.name}</strong>
 
-          <p>${data.text}</p>
+          <p>${data.text || ""}</p>
+
+
+
+          ${data.image ? `
+
+            <img
+              class="chat-image"
+              src="${data.image}"
+            >
+
+          ` : ""}
 
         </div>
 
@@ -159,5 +218,9 @@ onSnapshot(q, (snapshot) => {
     `;
 
   });
+
+
+
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
 });
