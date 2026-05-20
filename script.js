@@ -54,19 +54,19 @@ function mostrarUsuario(user){
 
   userDiv.innerHTML = `
 
-    <h2>${user.displayName}</h2>
+    <div class="user-info">
 
-    <p>${user.email}</p>
+      <img src="${user.photoURL}">
 
-    <img src="${user.photoURL}" width="120">
+      <span class="user-name">
+        ${user.displayName}
+      </span>
 
-    <br><br>
-
-    <button id="logoutBtn">
-      Sair
-    </button>
+    </div>
 
   `;
+
+}
 
 
 

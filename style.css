@@ -11,22 +11,34 @@ body{
 }
 
 
+
+/* NAVBAR */
+
 nav{
 
   background:#1a1a1a;
 
-  padding:20px;
+  padding:15px 30px;
 
   display:flex;
 
-  justify-content:center;
+  justify-content:space-between;
+
+  align-items:center;
+
+}
+
+
+.nav-left{
+
+  display:flex;
 
   gap:25px;
 
 }
 
 
-nav a{
+.nav-left a{
 
   color:white;
 
@@ -39,12 +51,95 @@ nav a{
 }
 
 
-nav a:hover{
+.nav-left a:hover{
 
   color:#5865F2;
 
 }
 
+
+
+/* LOGIN */
+
+.nav-right{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+
+#loginBtn{
+
+  padding:10px 20px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+}
+
+
+#loginBtn:hover{
+
+  opacity:0.9;
+
+}
+
+
+#user{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.user-info{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.user-info img{
+
+  width:45px;
+
+  height:45px;
+
+  border-radius:50%;
+
+}
+
+
+.user-name{
+
+  font-size:16px;
+
+}
+
+
+
+/* CONTEÚDO */
 
 .container{
 
@@ -58,14 +153,14 @@ nav a:hover{
 
   text-align:center;
 
-  padding:50px;
+  padding:100px 20px;
 
 }
 
 
 h1{
 
-  font-size:50px;
+  font-size:55px;
 
   margin-bottom:20px;
 
@@ -76,56 +171,8 @@ p{
 
   max-width:700px;
 
-  font-size:20px;
+  font-size:22px;
 
   line-height:1.6;
-
-}
-
-
-button{
-
-  margin-top:20px;
-
-  padding:15px 30px;
-
-  border:none;
-
-  border-radius:12px;
-
-  background:#5865F2;
-
-  color:white;
-
-  font-size:18px;
-
-  cursor:pointer;
-
-  transition:0.2s;
-
-}
-
-
-button:hover{
-
-  transform:scale(1.05);
-
-}
-
-
-#user{
-
-  margin-top:30px;
-
-  text-align:center;
-
-}
-
-
-#user img{
-
-  margin-top:10px;
-
-  border-radius:50%;
 
 }
