@@ -17,28 +17,46 @@
 
   <nav>
 
-    <a href="index.html">Início</a>
+    <div class="nav-left">
 
-    <a href="sobre.html">Sobre</a>
+      <a href="index.html">Início</a>
 
-    <a href="chat.html">Chat</a>
+      <a href="sobre.html">Sobre</a>
 
-    <a href="votacao.html">Votação</a>
+      <a href="chat.html">Chat</a>
 
-    <a href="calendario.html">Calendário</a>
+      <a href="votacao.html">Votação</a>
+
+      <a href="calendario.html">Calendário</a>
+
+    </div>
 
   </nav>
 
 
-  <div class="container">
+  <div class="chat-container">
 
     <h1>💬 Chat do Clube</h1>
 
-    <p>
-      O chat será adicionado em breve.
-    </p>
+    <div id="messages"></div>
+
+    <div class="chat-input">
+
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Digite uma mensagem..."
+      >
+
+      <button id="sendBtn">
+        Enviar
+      </button>
+
+    </div>
 
   </div>
+
+  <script type="module" src="chat.js"></script>
 
 </body>
 </html>
