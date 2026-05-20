@@ -46,34 +46,38 @@ const userDiv = document.getElementById("user");
 
 
 
-loginBtn.addEventListener("click", async () => {
+if(loginBtn){
 
-  try{
+  loginBtn.addEventListener("click", async () => {
 
-    const result = await signInWithPopup(auth, provider);
+    try{
 
-    const user = result.user;
+      const result = await signInWithPopup(auth, provider);
 
-
-
-    userDiv.innerHTML = `
-
-      <h2>${user.displayName}</h2>
-
-      <p>${user.email}</p>
-
-      <img src="${user.photoURL}" width="120">
-
-    `;
+      const user = result.user;
 
 
 
-  } catch(error){
+      userDiv.innerHTML = `
 
-    console.error(error);
+        <h2>${user.displayName}</h2>
 
-    alert("Erro no login: " + error.message);
+        <p>${user.email}</p>
 
-  }
+        <img src="${user.photoURL}" width="120">
 
-});
+      `;
+
+
+
+    } catch(error){
+
+      console.error(error);
+
+      alert("Erro no login: " + error.message);
+
+    }
+
+  });
+
+}
