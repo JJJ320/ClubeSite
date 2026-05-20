@@ -275,7 +275,7 @@ onSnapshot(q, (snapshot) => {
 
 
 
-        <div>
+        <div class="message-content">
 
           <strong>${data.name}</strong>
 

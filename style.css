@@ -128,6 +128,8 @@ nav{
 
   border-radius:50%;
 
+  object-fit:cover;
+
 }
 
 
@@ -177,78 +179,9 @@ p{
 
 }
 
-.chat-container{
-
-  padding:30px;
-
-}
 
 
-#messages{
-
-  margin-top:20px;
-
-  height:500px;
-
-  overflow-y:auto;
-
-  background:#1a1a1a;
-
-  padding:20px;
-
-  border-radius:15px;
-
-}
-
-
-.message{
-
-  display:flex;
-
-  gap:15px;
-
-  margin-bottom:20px;
-
-  align-items:flex-start;
-
-}
-
-
-.message img{
-
-  width:50px;
-
-  height:50px;
-
-  border-radius:50%;
-
-}
-
-
-.chat-input{
-
-  display:flex;
-
-  gap:10px;
-
-  margin-top:20px;
-
-}
-
-
-.chat-input input{
-
-  flex:1;
-
-  padding:15px;
-
-  border:none;
-
-  border-radius:10px;
-
-  font-size:16px;
-
-}
+/* CHAT */
 
 .chat-container{
 
@@ -280,7 +213,7 @@ p{
 
   gap:15px;
 
-  margin-bottom:20px;
+  margin-bottom:25px;
 
   align-items:flex-start;
 
@@ -295,8 +228,104 @@ p{
 
   border-radius:50%;
 
+  object-fit:cover;
+
+  flex-shrink:0;
+
 }
 
+
+.message-content{
+
+  max-width:80%;
+
+}
+
+
+.message-content strong{
+
+  display:block;
+
+  margin-bottom:5px;
+
+  font-size:17px;
+
+}
+
+
+.message-content p{
+
+  margin:0;
+
+  font-size:16px;
+
+  line-height:1.5;
+
+  word-break:break-word;
+
+}
+
+
+
+/* IMAGENS DO CHAT */
+
+.chat-image{
+
+  margin-top:10px;
+
+  display:block;
+
+  width:auto;
+
+  height:auto;
+
+  max-width:500px;
+
+  max-height:600px;
+
+  border-radius:12px;
+
+  object-fit:contain;
+
+}
+
+
+
+/* VÍDEOS */
+
+.chat-video{
+
+  margin-top:10px;
+
+  display:block;
+
+  width:auto;
+
+  height:auto;
+
+  max-width:500px;
+
+  max-height:600px;
+
+  border-radius:12px;
+
+}
+
+
+
+/* ÁUDIOS */
+
+audio{
+
+  margin-top:10px;
+
+  width:300px;
+
+}
+
+
+
+/* INPUT DO CHAT */
 
 .chat-input{
 
@@ -321,44 +350,41 @@ p{
 
   font-size:16px;
 
-}
+  background:#1f1f1f;
 
-
-.chat-image{
-
-  margin-top:10px;
-
-  max-width:300px;
-
-  max-height:400px;
-
-  width:auto;
-
-  height:auto;
-
-  border-radius:12px;
-
-  object-fit:contain;
-
-  display:block;
+  color:white;
 
 }
 
-.chat-video{
 
-  margin-top:10px;
+.chat-input input[type="file"]{
 
-  max-width:350px;
+  color:white;
+
+}
+
+
+.chat-input button{
+
+  padding:15px 25px;
+
+  border:none;
 
   border-radius:10px;
 
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
 }
 
 
-audio{
+.chat-input button:hover{
 
-  margin-top:10px;
-
-  width:300px;
+  opacity:0.9;
 
 }
