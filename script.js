@@ -1,9 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
+
   getAuth,
+
   GoogleAuthProvider,
+
   signInWithPopup
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
@@ -27,6 +31,7 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -34,30 +39,40 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 
+
 const loginBtn = document.getElementById("loginBtn");
 
 const userDiv = document.getElementById("user");
 
 
+
 loginBtn.addEventListener("click", async () => {
 
-  try {
+  try{
 
     const result = await signInWithPopup(auth, provider);
 
     const user = result.user;
 
+
+
     userDiv.innerHTML = `
 
       <h2>${user.displayName}</h2>
 
-      <img src="${user.photoURL}" width="100" style="border-radius:50%">
+      <p>${user.email}</p>
+
+      <img src="${user.photoURL}" width="120">
 
     `;
+
+
 
   } catch(error){
 
     console.error(error);
+
+    alert("Erro no login: " + error.message);
 
   }
 
