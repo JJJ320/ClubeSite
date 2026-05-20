@@ -330,7 +330,17 @@ p{
 
   max-width:300px;
 
-  border-radius:10px;
+  max-height:400px;
+
+  width:auto;
+
+  height:auto;
+
+  border-radius:12px;
+
+  object-fit:contain;
+
+  display:block;
 
 }
 
