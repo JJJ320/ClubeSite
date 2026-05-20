@@ -388,3 +388,118 @@ audio{
   opacity:0.9;
 
 }
+
+.calendar-container{
+
+  padding:30px;
+
+}
+
+
+.calendar-form{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:15px;
+
+  margin-bottom:30px;
+
+}
+
+
+.calendar-form input,
+
+.calendar-form textarea{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#1f1f1f;
+
+  color:white;
+
+  font-size:16px;
+
+}
+
+
+.calendar-form textarea{
+
+  min-height:120px;
+
+  resize:vertical;
+
+}
+
+
+.calendar-form button{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+}
+
+
+#eventsList{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:20px;
+
+}
+
+
+.event-card{
+
+  background:#1a1a1a;
+
+  padding:20px;
+
+  border-radius:15px;
+
+}
+
+
+.event-card h2{
+
+  margin:0;
+
+  font-size:28px;
+
+}
+
+
+.event-card h3{
+
+  margin-top:10px;
+
+  color:#5865F2;
+
+}
+
+
+.event-card p{
+
+  margin-top:10px;
+
+  font-size:16px;
+
+}

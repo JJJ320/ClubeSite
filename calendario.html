@@ -17,28 +17,70 @@
 
   <nav>
 
-    <a href="index.html">Início</a>
+    <div class="nav-left">
 
-    <a href="sobre.html">Sobre</a>
+      <a href="index.html">Início</a>
 
-    <a href="chat.html">Chat</a>
+      <a href="sobre.html">Sobre</a>
 
-    <a href="votacao.html">Votação</a>
+      <a href="chat.html">Chat</a>
 
-    <a href="calendario.html">Calendário</a>
+      <a href="votacao.html">Votação</a>
+
+      <a href="calendario.html">Calendário</a>
+
+    </div>
 
   </nav>
 
 
-  <div class="container">
 
-    <h1>📅 Calendário</h1>
+  <div class="calendar-container">
 
-    <p>
-      Os dias e atividades do clube aparecerão aqui.
-    </p>
+    <h1>📅 Agenda do Clube</h1>
+
+
+
+    <div class="calendar-form">
+
+      <input
+        type="text"
+        id="dayInput"
+        placeholder="Dia do clube"
+      >
+
+
+
+      <input
+        type="text"
+        id="activityInput"
+        placeholder="Atividade"
+      >
+
+
+
+      <textarea
+        id="noteInput"
+        placeholder="Observações"
+      ></textarea>
+
+
+
+      <button id="saveEventBtn">
+        Salvar Agenda
+      </button>
+
+    </div>
+
+
+
+    <div id="eventsList"></div>
 
   </div>
+
+
+
+  <script type="module" src="calendario.js"></script>
 
 </body>
 </html>
