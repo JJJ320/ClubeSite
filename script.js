@@ -6,7 +6,11 @@ import {
 
   GoogleAuthProvider,
 
-  signInWithPopup
+  signInWithPopup,
+
+  onAuthStateChanged,
+
+  signOut
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -46,31 +50,51 @@ const userDiv = document.getElementById("user");
 
 
 
+function mostrarUsuario(user){
+
+  userDiv.innerHTML = `
+
+    <h2>${user.displayName}</h2>
+
+    <p>${user.email}</p>
+
+    <img src="${user.photoURL}" width="120">
+
+    <br><br>
+
+    <button id="logoutBtn">
+      Sair
+    </button>
+
+  `;
+
+
+
+  const logoutBtn = document.getElementById("logoutBtn");
+
+
+
+  logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+  });
+
+}
+
+
+
 if(loginBtn){
 
   loginBtn.addEventListener("click", async () => {
 
     try{
 
-      const result = await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
 
-      const user = result.user;
+    }
 
-
-
-      userDiv.innerHTML = `
-
-        <h2>${user.displayName}</h2>
-
-        <p>${user.email}</p>
-
-        <img src="${user.photoURL}" width="120">
-
-      `;
-
-
-
-    } catch(error){
+    catch(error){
 
       console.error(error);
 
@@ -81,3 +105,25 @@ if(loginBtn){
   });
 
 }
+
+
+
+onAuthStateChanged(auth, (user) => {
+
+  if(user){
+
+    loginBtn.style.display = "none";
+
+    mostrarUsuario(user);
+
+  }
+
+  else{
+
+    loginBtn.style.display = "block";
+
+    userDiv.innerHTML = "";
+
+  }
+
+});
