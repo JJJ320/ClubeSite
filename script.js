@@ -126,19 +126,47 @@ function mostrarUsuario(userData){
 
         <small>
 
-          ${userData.role}
+          ${userData.email}
+
+        </small>
+
+
+
+        <br>
+
+
+
+        <small>
+
+          Cargo: ${userData.role}
 
         </small>
 
       </div>
 
+
+
+      <button id="logoutBtn">
+        Sair
+      </button>
+
     </div>
 
   `;
 
+
+
+  const logoutBtn = document.getElementById("logoutBtn");
+
+
+
+  logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+  });
+
 }
-
-
 
 loginBtn.addEventListener("click", async () => {
 

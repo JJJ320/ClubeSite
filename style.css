@@ -524,3 +524,19 @@ audio{
   font-size:16px;
 
 }
+
+#logoutBtn{
+
+  padding:10px 15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#ff4d4d;
+
+  color:white;
+
+  cursor:pointer;
+
+}
