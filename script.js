@@ -14,6 +14,18 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+
+  getFirestore,
+
+  doc,
+
+  setDoc,
+
+  getDoc
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 const firebaseConfig = {
@@ -40,6 +52,10 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
+const db = getFirestore(app);
+
+
+
 const provider = new GoogleAuthProvider();
 
 
@@ -48,79 +64,191 @@ const loginBtn = document.getElementById("loginBtn");
 
 const userDiv = document.getElementById("user");
 
+const roleSelect = document.getElementById("roleSelect");
+
+const codeInput = document.getElementById("codeInput");
 
 
-function mostrarUsuario(user){
+
+const LEADER_CODE = "LIDER123";
+
+const DIRECTOR_CODE = "DIRETOR123";
+
+
+
+codeInput.style.display = "none";
+
+
+
+roleSelect.addEventListener("change", () => {
+
+  if(
+
+    roleSelect.value === "leader" ||
+
+    roleSelect.value === "director"
+
+  ){
+
+    codeInput.style.display = "block";
+
+  }
+
+  else{
+
+    codeInput.style.display = "none";
+
+  }
+
+});
+
+
+
+function mostrarUsuario(userData){
 
   userDiv.innerHTML = `
 
-    <h2>${user.displayName}</h2>
+    <div class="user-info">
 
-    <p>${user.email}</p>
+      <img src="${userData.photo}">
 
-    <img src="${user.photoURL}" width="120">
 
-    <br><br>
 
-    <button id="logoutBtn">
-      Sair
-    </button>
+      <div>
+
+        <div class="user-name">
+
+          ${userData.name}
+
+        </div>
+
+
+
+        <small>
+
+          ${userData.role}
+
+        </small>
+
+      </div>
+
+    </div>
 
   `;
 
-
-
-  const logoutBtn = document.getElementById("logoutBtn");
-
-
-
-  logoutBtn.addEventListener("click", async () => {
-
-    await signOut(auth);
-
-  });
-
 }
 
 
 
-if(loginBtn){
+loginBtn.addEventListener("click", async () => {
 
-  loginBtn.addEventListener("click", async () => {
+  const role = roleSelect.value;
 
-    try{
 
-      await signInWithPopup(auth, provider);
 
-    }
+  if(role === "leader"){
 
-    catch(error){
+    if(codeInput.value !== LEADER_CODE){
 
-      console.error(error);
+      alert("Código de líder inválido");
 
-      alert("Erro no login: " + error.message);
+      return;
 
     }
 
-  });
-
-}
+  }
 
 
 
-onAuthStateChanged(auth, (user) => {
+  if(role === "director"){
+
+    if(codeInput.value !== DIRECTOR_CODE){
+
+      alert("Código de diretor inválido");
+
+      return;
+
+    }
+
+  }
+
+
+
+  try{
+
+    const result = await signInWithPopup(auth, provider);
+
+
+
+    const user = result.user;
+
+
+
+    await setDoc(
+
+      doc(db, "users", user.uid),
+
+      {
+
+        name: user.displayName,
+
+        email: user.email,
+
+        photo: user.photoURL,
+
+        role: role
+
+      }
+
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert("Erro no login");
+
+  }
+
+});
+
+
+
+onAuthStateChanged(auth, async (user) => {
 
   if(user){
 
     loginBtn.style.display = "none";
 
-    mostrarUsuario(user);
+    roleSelect.style.display = "none";
+
+    codeInput.style.display = "none";
+
+
+
+    const userRef = doc(db, "users", user.uid);
+
+    const userSnap = await getDoc(userRef);
+
+
+
+    if(userSnap.exists()){
+
+      mostrarUsuario(userSnap.data());
+
+    }
 
   }
 
   else{
 
     loginBtn.style.display = "block";
+
+    roleSelect.style.display = "block";
+
+
 
     userDiv.innerHTML = "";
 

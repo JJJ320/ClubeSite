@@ -72,6 +72,23 @@ nav{
 }
 
 
+#roleSelect,
+
+#codeInput{
+
+  padding:10px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#1f1f1f;
+
+  color:white;
+
+}
+
+
 #loginBtn{
 
   padding:10px 20px;
@@ -267,7 +284,7 @@ p{
 
 
 
-/* IMAGENS DO CHAT */
+/* IMAGENS */
 
 .chat-image{
 
@@ -313,7 +330,7 @@ p{
 
 
 
-/* ÁUDIOS */
+/* ÁUDIO */
 
 audio{
 
@@ -325,7 +342,7 @@ audio{
 
 
 
-/* INPUT DO CHAT */
+/* INPUT CHAT */
 
 .chat-input{
 
@@ -388,6 +405,10 @@ audio{
   opacity:0.9;
 
 }
+
+
+
+/* CALENDÁRIO */
 
 .calendar-container{
 

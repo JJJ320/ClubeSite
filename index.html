@@ -32,11 +32,40 @@
     </div>
 
 
+
     <div class="nav-right">
+
+      <select id="roleSelect">
+
+        <option value="student">
+          Estudante
+        </option>
+
+        <option value="leader">
+          Líder de Clube
+        </option>
+
+        <option value="director">
+          Diretor/Vice
+        </option>
+
+      </select>
+
+
+
+      <input
+        type="password"
+        id="codeInput"
+        placeholder="Código de acesso"
+      >
+
+
 
       <button id="loginBtn">
         Entrar
       </button>
+
+
 
       <div id="user"></div>
 
@@ -55,6 +84,7 @@
     </p>
 
   </div>
+
 
 
   <script type="module" src="script.js"></script>
