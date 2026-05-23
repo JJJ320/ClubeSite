@@ -70,9 +70,9 @@ const codeInput = document.getElementById("codeInput");
 
 
 
-const LEADER_CODE = "LIDER123";
+const LEADER_CODE = "LIDER779";
 
-const DIRECTOR_CODE = "DIRETOR123";
+const DIRECTOR_CODE = "Acesso0255";
 
 
 
