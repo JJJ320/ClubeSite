@@ -112,16 +112,57 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-  headerToolbar: {
+headerToolbar: {
 
-    left: "prev,next today",
+  left: "prev,next hoje",
 
-    center: "title",
+  center: "title",
 
-    right: "dayGridMonth,timeGridWeek,timeGridDay"
+  right: "mes,semana,dia"
+
+},
+
+
+
+buttonText: {
+
+  hoje: "Hoje",
+
+  mes: "Mês",
+
+  semana: "Semana",
+
+  dia: "Dia"
+
+},
+
+
+
+views: {
+
+  mes: {
+
+    type: "dayGridMonth"
 
   },
 
+
+
+  semana: {
+
+    type: "timeGridWeek"
+
+  },
+
+
+
+  dia: {
+
+    type: "timeGridDay"
+
+  }
+
+},
 
 
   dateClick(info){
