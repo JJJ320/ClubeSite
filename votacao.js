@@ -94,6 +94,44 @@ onAuthStateChanged(auth, (user) => {
 
 
 
+async function uploadToCloudinary(file){
+
+  const formData = new FormData();
+
+
+
+  formData.append("file", file);
+
+  formData.append("upload_preset", "chat_upload");
+
+
+
+  const response = await fetch(
+
+    "https://api.cloudinary.com/v1_1/dlmrbca0i/auto/upload",
+
+    {
+
+      method:"POST",
+
+      body:formData
+
+    }
+
+  );
+
+
+
+  const data = await response.json();
+
+
+
+  return data.secure_url;
+
+}
+
+
+
 if(
 
   role === "leader" ||
@@ -118,39 +156,15 @@ if(
 
 
 
-      <input
-
-        type="text"
-
-        id="option1"
-
-        placeholder="Opção 1"
-
-      >
+      <div id="optionsContainer"></div>
 
 
 
-      <input
+      <button id="addOptionBtn">
 
-        type="text"
+        + Adicionar opção
 
-        id="option2"
-
-        placeholder="Opção 2"
-
-      >
-
-
-
-      <input
-
-        type="text"
-
-        id="option3"
-
-        placeholder="Opção 3"
-
-      >
+      </button>
 
 
 
@@ -166,11 +180,83 @@ if(
 
 
 
+  adicionarOpcao();
+
+  adicionarOpcao();
+
+
+
+  document
+
+    .getElementById("addOptionBtn")
+
+    .addEventListener("click", adicionarOpcao);
+
+
+
   document
 
     .getElementById("createPollBtn")
 
     .addEventListener("click", criarVotacao);
+
+}
+
+
+
+function adicionarOpcao(){
+
+  const div = document.createElement("div");
+
+
+
+  div.className = "poll-option-editor";
+
+
+
+  div.innerHTML = `
+
+    <input
+
+      type="text"
+
+      class="optionTitle"
+
+      placeholder="Nome da atividade"
+
+    >
+
+
+
+    <textarea
+
+      class="optionDescription"
+
+      placeholder="Descrição da atividade"
+
+    ></textarea>
+
+
+
+    <input
+
+      type="file"
+
+      class="optionImage"
+
+      accept="image/*"
+
+    >
+
+  `;
+
+
+
+  document
+
+    .getElementById("optionsContainer")
+
+    .appendChild(div);
 
 }
 
@@ -184,25 +270,85 @@ async function criarVotacao(){
 
 
 
-  const option1 =
-
-    document.getElementById("option1").value;
-
-
-
-  const option2 =
-
-    document.getElementById("option2").value;
-
-
-
-  const option3 =
-
-    document.getElementById("option3").value;
-
-
-
   if(!question) return;
+
+
+
+  const optionElements =
+
+    document.querySelectorAll(
+
+      ".poll-option-editor"
+
+    );
+
+
+
+  const options = [];
+
+
+
+  for(const element of optionElements){
+
+    const title =
+
+      element.querySelector(
+
+        ".optionTitle"
+
+      ).value;
+
+
+
+    const description =
+
+      element.querySelector(
+
+        ".optionDescription"
+
+      ).value;
+
+
+
+    const imageFile =
+
+      element.querySelector(
+
+        ".optionImage"
+
+      ).files[0];
+
+
+
+    let image = "";
+
+
+
+    if(imageFile){
+
+      image = await uploadToCloudinary(
+
+        imageFile
+
+      );
+
+    }
+
+
+
+    options.push({
+
+      title,
+
+      description,
+
+      image,
+
+      votes:0
+
+    });
+
+  }
 
 
 
@@ -210,41 +356,7 @@ async function criarVotacao(){
 
     question,
 
-
-
-    options:[
-
-      {
-
-        text:option1,
-
-        votes:0
-
-      },
-
-
-
-      {
-
-        text:option2,
-
-        votes:0
-
-      },
-
-
-
-      {
-
-        text:option3,
-
-        votes:0
-
-      }
-
-    ],
-
-
+    options,
 
     voters:[]
 
@@ -266,6 +378,20 @@ onSnapshot(collection(db, "polls"), (snapshot) => {
 
 
 
+    const totalVotes =
+
+      data.options.reduce(
+
+        (acc, option) =>
+
+          acc + option.votes,
+
+        0
+
+      );
+
+
+
     const poll = document.createElement("div");
 
 
@@ -282,49 +408,117 @@ onSnapshot(collection(db, "polls"), (snapshot) => {
 
       </h2>
 
-
-
-      <div class="options"></div>
-
     `;
-
-
-
-    const optionsDiv =
-
-      poll.querySelector(".options");
 
 
 
     data.options.forEach((option, index) => {
 
-      const button = document.createElement("button");
+      const percentage =
+
+        totalVotes > 0
+
+        ?
+
+        Math.round(
+
+          (option.votes / totalVotes)
+
+          * 100
+
+        )
+
+        :
+
+        0;
 
 
 
-      button.innerHTML = `
+      const optionDiv =
 
-        ${option.text}
+        document.createElement("div");
 
-        (${option.votes} votos)
+
+
+      optionDiv.className =
+
+        "vote-option-card";
+
+
+
+      optionDiv.innerHTML = `
+
+        <img src="${option.image}">
+
+
+
+        <h3>
+
+          ${option.title}
+
+        </h3>
+
+
+
+        <p>
+
+          ${option.description}
+
+        </p>
+
+
+
+        <div class="vote-bar">
+
+          <div
+
+            class="vote-fill"
+
+            style="width:${percentage}%"
+
+          ></div>
+
+        </div>
+
+
+
+        <div class="vote-info">
+
+          ${option.votes} votos
+
+          (${percentage}%)
+
+        </div>
+
+
+
+        <button>
+
+          Votar
+
+        </button>
 
       `;
 
 
 
-      button.onclick = () => votar(
+      optionDiv
 
-        documento.id,
+        .querySelector("button")
 
-        data,
+        .onclick = () => votar(
 
-        index
+          documento.id,
 
-      );
+          data,
+
+          index
+
+        );
 
 
 
-      optionsDiv.appendChild(button);
+      poll.appendChild(optionDiv);
 
     });
 
@@ -344,11 +538,13 @@ onSnapshot(collection(db, "polls"), (snapshot) => {
 
 
 
-      deleteBtn.textContent = "Apagar";
+      deleteBtn.textContent = "Apagar votação";
 
 
 
-      deleteBtn.className = "delete-poll";
+      deleteBtn.className =
+
+        "delete-poll";
 
 
 

@@ -971,3 +971,213 @@ audio{
   cursor:pointer;
 
 }
+
+/* VOTAÇÃO */
+
+.vote-page{
+
+  padding:30px;
+
+}
+
+
+.create-poll{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:15px;
+
+  margin-bottom:30px;
+
+}
+
+
+.create-poll input,
+
+.create-poll textarea{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#1f1f1f;
+
+  color:white;
+
+  font-size:16px;
+
+}
+
+
+.create-poll button{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+}
+
+
+.poll-option-editor{
+
+  background:#1a1a1a;
+
+  padding:15px;
+
+  border-radius:15px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+}
+
+
+.poll-card{
+
+  background:#1a1a1a;
+
+  padding:20px;
+
+  border-radius:20px;
+
+  margin-bottom:30px;
+
+}
+
+
+.vote-option-card{
+
+  background:#222;
+
+  padding:15px;
+
+  border-radius:15px;
+
+  margin-top:20px;
+
+}
+
+
+.vote-option-card img{
+
+  width:100%;
+
+  max-height:250px;
+
+  object-fit:cover;
+
+  border-radius:12px;
+
+}
+
+
+.vote-option-card h3{
+
+  margin-top:15px;
+
+}
+
+
+.vote-option-card p{
+
+  font-size:16px;
+
+  line-height:1.5;
+
+}
+
+
+.vote-option-card button{
+
+  margin-top:15px;
+
+  width:100%;
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+}
+
+
+.vote-bar{
+
+  width:100%;
+
+  height:20px;
+
+  background:#333;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  margin-top:15px;
+
+}
+
+
+.vote-fill{
+
+  height:100%;
+
+  background:#5865F2;
+
+}
+
+
+.vote-info{
+
+  margin-top:10px;
+
+  font-size:15px;
+
+}
+
+
+.delete-poll{
+
+  margin-top:20px;
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#ff4d4d;
+
+  color:white;
+
+  cursor:pointer;
+
+  width:100%;
+
+}
