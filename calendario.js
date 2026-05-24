@@ -94,6 +94,8 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
       modal.style.display = "flex";
 
+      document.body.style.overflow = "hidden";
+
     }
 
   },
@@ -138,13 +140,13 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-calendar.render();
-
-
-
 closeModal.addEventListener("click", () => {
 
   modal.style.display = "none";
+
+
+
+  document.body.style.overflow = "auto";
 
 });
 
