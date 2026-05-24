@@ -140,6 +140,26 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
       modal.style.display = "flex";
 
+
+
+      document.body.style.overflow = "hidden";
+
+
+
+      saveBtn.textContent = "Salvar Evento";
+
+
+
+      titleInput.value = "";
+
+      descInput.value = "";
+
+      imageInput.value = "";
+
+
+
+      saveBtn.onclick = salvarNovoEvento;
+
     }
 
   },
@@ -162,7 +182,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
     viewDescription.textContent =
 
-      event.extendedProps.description;
+      event.extendedProps.description || "";
 
 
 
@@ -204,6 +224,10 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
     viewModal.style.display = "flex";
 
+
+
+    document.body.style.overflow = "hidden";
+
   }
 
 });
@@ -218,6 +242,10 @@ closeModal.addEventListener("click", () => {
 
   modal.style.display = "none";
 
+
+
+  document.body.style.overflow = "auto";
+
 });
 
 
@@ -225,6 +253,10 @@ closeModal.addEventListener("click", () => {
 closeViewModal.addEventListener("click", () => {
 
   viewModal.style.display = "none";
+
+
+
+  document.body.style.overflow = "auto";
 
 });
 
@@ -268,7 +300,7 @@ async function uploadToCloudinary(file){
 
 
 
-saveBtn.addEventListener("click", async () => {
+async function salvarNovoEvento(){
 
   if(!titleInput.value) return;
 
@@ -308,13 +340,21 @@ saveBtn.addEventListener("click", async () => {
 
 
 
+  document.body.style.overflow = "auto";
+
+
+
   titleInput.value = "";
 
   descInput.value = "";
 
   imageInput.value = "";
 
-});
+}
+
+
+
+saveBtn.onclick = salvarNovoEvento;
 
 
 
@@ -330,31 +370,107 @@ deleteEventBtn.addEventListener("click", async () => {
 
   viewModal.style.display = "none";
 
+
+
+  document.body.style.overflow = "auto";
+
 });
 
 
 
 editEventBtn.addEventListener("click", async () => {
 
-  const newTitle = prompt("Novo título:");
+  viewModal.style.display = "none";
 
 
 
-  if(!newTitle) return;
+  const event = calendar.getEventById(
+
+    selectedEventId
+
+  );
 
 
 
-  await updateDoc(
+  titleInput.value = event.title;
 
-    doc(db, "events", selectedEventId),
 
-    {
 
-      title: newTitle
+  descInput.value =
+
+    event.extendedProps.description || "";
+
+
+
+  modal.style.display = "flex";
+
+
+
+  saveBtn.textContent = "Salvar Alterações";
+
+
+
+  saveBtn.onclick = async () => {
+
+    let imageUrl =
+
+      event.extendedProps.image || "";
+
+
+
+    if(imageInput.files[0]){
+
+      imageUrl = await uploadToCloudinary(
+
+        imageInput.files[0]
+
+      );
 
     }
 
-  );
+
+
+    await updateDoc(
+
+      doc(db, "events", selectedEventId),
+
+      {
+
+        title: titleInput.value,
+
+        description: descInput.value,
+
+        image: imageUrl
+
+      }
+
+    );
+
+
+
+    modal.style.display = "none";
+
+
+
+    document.body.style.overflow = "auto";
+
+
+
+    titleInput.value = "";
+
+    descInput.value = "";
+
+    imageInput.value = "";
+
+
+
+    saveBtn.textContent = "Salvar Evento";
+
+
+
+    saveBtn.onclick = salvarNovoEvento;
+
+  };
 
 });
 
