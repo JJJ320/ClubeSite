@@ -43,6 +43,8 @@ nav{
 
   align-items:center;
 
+  flex-wrap:wrap;
+
 }
 
 
@@ -76,6 +78,8 @@ nav{
   align-items:center;
 
   gap:15px;
+
+  flex-wrap:wrap;
 
 }
 
@@ -383,6 +387,8 @@ audio{
 
   margin-top:20px;
 
+  flex-wrap:wrap;
+
 }
 
 
@@ -564,7 +570,7 @@ audio{
 
   background:#1a1a1a;
 
-  padding:30px;
+  padding:22px;
 
   border-radius:20px;
 
@@ -572,9 +578,15 @@ audio{
 
   flex-direction:column;
 
-  gap:15px;
+  gap:12px;
 
   width:400px;
+
+  max-width:90%;
+
+  max-height:85vh;
+
+  overflow-y:auto;
 
   position:relative;
 
@@ -608,7 +620,7 @@ audio{
 
 .modal-content textarea{
 
-  min-height:120px;
+  min-height:80px;
 
   resize:vertical;
 
@@ -631,6 +643,8 @@ audio{
 
   font-size:16px;
 
+  transition:0.2s;
+
 }
 
 
@@ -641,7 +655,49 @@ audio{
 }
 
 
-#closeModal{
+#viewImage{
+
+  width:100%;
+
+  border-radius:15px;
+
+  margin-top:15px;
+
+  max-height:300px;
+
+  object-fit:cover;
+
+}
+
+
+#adminButtons{
+
+  display:flex;
+
+  gap:10px;
+
+  margin-top:20px;
+
+}
+
+
+#adminButtons button{
+
+  flex:1;
+
+}
+
+
+#deleteEventBtn{
+
+  background:#ff4d4d !important;
+
+}
+
+
+#closeModal,
+
+#closeViewModal{
 
   position:absolute;
 
@@ -673,8 +729,6 @@ audio{
 
   .nav-left{
 
-    flex-wrap:wrap;
-
     justify-content:center;
 
   }
@@ -705,39 +759,20 @@ audio{
 
   }
 
-}
-
-#viewImage{
-
-  width:100%;
-
-  border-radius:15px;
-
-  margin-top:15px;
-
-}
 
 
-#adminButtons{
+  h1{
 
-  display:flex;
+    font-size:38px;
 
-  gap:10px;
-
-  margin-top:20px;
-
-}
+  }
 
 
-#adminButtons button{
 
-  flex:1;
+  p{
 
-}
+    font-size:18px;
 
-
-#deleteEventBtn{
-
-  background:#ff4d4d !important;
+  }
 
 }

@@ -518,6 +518,10 @@ editEventBtn.addEventListener("click", async () => {
 
 
 
+  document.body.style.overflow = "hidden";
+
+
+
   saveBtn.textContent = "Salvar Alterações";
 
 
@@ -558,7 +562,7 @@ editEventBtn.addEventListener("click", async () => {
 
         start:
 
-          selectedDate +
+          event.startStr.split("T")[0] +
 
           "T" +
 
@@ -568,7 +572,7 @@ editEventBtn.addEventListener("click", async () => {
 
         end:
 
-          selectedDate +
+          event.startStr.split("T")[0] +
 
           "T" +
 
