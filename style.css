@@ -776,3 +776,42 @@ audio{
   }
 
 }
+
+.fc-day-today{
+
+  position:relative;
+
+}
+
+
+.fc-day-today::after{
+
+  content:"HOJE";
+
+
+
+  position:absolute;
+
+  top:5px;
+
+  right:5px;
+
+
+
+  background:#5865F2;
+
+  color:white;
+
+
+
+  font-size:10px;
+
+  font-weight:bold;
+
+
+
+  padding:3px 6px;
+
+  border-radius:20px;
+
+}
