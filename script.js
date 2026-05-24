@@ -116,6 +116,40 @@ const LEADER_CODE = "lider123";
 
 const DIRECTOR_CODE = "diretor123";
 
+function atualizarCampoCodigo(){
+
+  if(
+
+    roleSelect.value === "student"
+
+  ){
+
+    codeInput.style.display = "none";
+
+  }
+
+  else{
+
+    codeInput.style.display = "block";
+
+  }
+
+}
+
+
+
+atualizarCampoCodigo();
+
+
+
+roleSelect.addEventListener(
+
+  "change",
+
+  atualizarCampoCodigo
+
+);
+
 
 
 await setPersistence(
