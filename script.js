@@ -212,24 +212,27 @@ loginBtn.addEventListener("click", async () => {
 
 
 
-    await setDoc(
+await setDoc(
 
-      doc(db, "users", user.uid),
+  doc(db, "users", user.uid),
 
-      {
+  {
 
-        name: user.displayName,
+    name: user.displayName,
 
-        email: user.email,
+    email: user.email,
 
-        photo: user.photoURL,
+    photo: user.photoURL,
 
-        role: role
+    role: role
 
-      }
+  }
 
-    );
+);
 
+
+
+localStorage.setItem("role", role);
   }
 
   catch(error){

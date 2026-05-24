@@ -14,16 +14,6 @@ import {
 
 
 
-import {
-
-  getAuth,
-
-  onAuthStateChanged
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
 const firebaseConfig = {
 
   apiKey: "AIzaSyB1eFWxsEoKzksJ43kKZcr4GosmwU4etWw",
@@ -48,25 +38,9 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const auth = getAuth(app);
 
 
-
-let currentUser = null;
-
-let selectedDate = null;
-
-
-
-onAuthStateChanged(auth, (user) => {
-
-  currentUser = user;
-
-});
-
-
-
-const calendarEl = document.getElementById("calendar");
+const role = localStorage.getItem("role");
 
 
 
@@ -86,6 +60,14 @@ const saveBtn = document.getElementById("saveEvent");
 
 
 
+let selectedDate = "";
+
+
+
+const calendarEl = document.getElementById("calendar");
+
+
+
 const calendar = new FullCalendar.Calendar(calendarEl, {
 
   initialView: "dayGridMonth",
@@ -96,15 +78,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-  selectable: true,
-
-
-
   dateClick(info){
-
-    const role = localStorage.getItem("role");
-
-
 
     if(
 
@@ -115,6 +89,8 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
     ){
 
       selectedDate = info.dateStr;
+
+
 
       modal.style.display = "flex";
 
@@ -130,15 +106,31 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-    alert(
+    let message =
 
-      event.title +
+      "📌 " + event.title +
 
       "\n\n" +
 
-      event.extendedProps.description
+      event.extendedProps.description;
 
-    );
+
+
+    alert(message);
+
+
+
+    if(event.extendedProps.image){
+
+      window.open(
+
+        event.extendedProps.image,
+
+        "_blank"
+
+      );
+
+    }
 
   }
 
@@ -197,6 +189,10 @@ async function uploadToCloudinary(file){
 
 
 saveBtn.addEventListener("click", async () => {
+
+  if(!titleInput.value) return;
+
+
 
   let imageUrl = "";
 
