@@ -8,13 +8,19 @@ import {
 
   addDoc,
 
-  query,
-
-  orderBy,
-
   onSnapshot
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+import {
+
+  getAuth,
+
+  onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
@@ -42,69 +48,203 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-
-
-const dayInput = document.getElementById("dayInput");
-
-const activityInput = document.getElementById("activityInput");
-
-const noteInput = document.getElementById("noteInput");
-
-const saveEventBtn = document.getElementById("saveEventBtn");
-
-const eventsList = document.getElementById("eventsList");
+const auth = getAuth(app);
 
 
 
-saveEventBtn.addEventListener("click", async () => {
+let currentUser = null;
 
-  if(
-
-    !dayInput.value ||
-
-    !activityInput.value
-
-  ) return;
+let selectedDate = null;
 
 
 
-  await addDoc(collection(db, "agenda"), {
+onAuthStateChanged(auth, (user) => {
 
-    day: dayInput.value,
-
-    activity: activityInput.value,
-
-    note: noteInput.value,
-
-    createdAt: Date.now()
-
-  });
-
-
-
-  dayInput.value = "";
-
-  activityInput.value = "";
-
-  noteInput.value = "";
+  currentUser = user;
 
 });
 
 
 
-const q = query(
-
-  collection(db, "agenda"),
-
-  orderBy("createdAt", "desc")
-
-);
+const calendarEl = document.getElementById("calendar");
 
 
 
-onSnapshot(q, (snapshot) => {
+const modal = document.getElementById("eventModal");
 
-  eventsList.innerHTML = "";
+const closeModal = document.getElementById("closeModal");
+
+
+
+const titleInput = document.getElementById("eventTitle");
+
+const descInput = document.getElementById("eventDescription");
+
+const imageInput = document.getElementById("eventImage");
+
+const saveBtn = document.getElementById("saveEvent");
+
+
+
+const calendar = new FullCalendar.Calendar(calendarEl, {
+
+  initialView: "dayGridMonth",
+
+
+
+  locale: "pt-br",
+
+
+
+  selectable: true,
+
+
+
+  dateClick(info){
+
+    const role = localStorage.getItem("role");
+
+
+
+    if(
+
+      role === "leader" ||
+
+      role === "director"
+
+    ){
+
+      selectedDate = info.dateStr;
+
+      modal.style.display = "flex";
+
+    }
+
+  },
+
+
+
+  eventClick(info){
+
+    const event = info.event;
+
+
+
+    alert(
+
+      event.title +
+
+      "\n\n" +
+
+      event.extendedProps.description
+
+    );
+
+  }
+
+});
+
+
+
+calendar.render();
+
+
+
+closeModal.addEventListener("click", () => {
+
+  modal.style.display = "none";
+
+});
+
+
+
+async function uploadToCloudinary(file){
+
+  const formData = new FormData();
+
+
+
+  formData.append("file", file);
+
+  formData.append("upload_preset", "chat_upload");
+
+
+
+  const response = await fetch(
+
+    "https://api.cloudinary.com/v1_1/dlmrbca0i/auto/upload",
+
+    {
+
+      method: "POST",
+
+      body: formData
+
+    }
+
+  );
+
+
+
+  const data = await response.json();
+
+
+
+  return data.secure_url;
+
+}
+
+
+
+saveBtn.addEventListener("click", async () => {
+
+  let imageUrl = "";
+
+
+
+  if(imageInput.files[0]){
+
+    imageUrl = await uploadToCloudinary(
+
+      imageInput.files[0]
+
+    );
+
+  }
+
+
+
+  await addDoc(collection(db, "events"), {
+
+    title: titleInput.value,
+
+    description: descInput.value,
+
+    date: selectedDate,
+
+    image: imageUrl
+
+  });
+
+
+
+  modal.style.display = "none";
+
+
+
+  titleInput.value = "";
+
+  descInput.value = "";
+
+  imageInput.value = "";
+
+});
+
+
+
+onSnapshot(collection(db, "events"), (snapshot) => {
+
+  calendar.removeAllEvents();
 
 
 
@@ -114,19 +254,17 @@ onSnapshot(q, (snapshot) => {
 
 
 
-    eventsList.innerHTML += `
+    calendar.addEvent({
 
-      <div class="event-card">
+      title: data.title,
 
-        <h2>${data.day}</h2>
+      start: data.date,
 
-        <h3>${data.activity}</h3>
+      description: data.description,
 
-        <p>${data.note || ""}</p>
+      image: data.image
 
-      </div>
-
-    `;
+    });
 
   });
 

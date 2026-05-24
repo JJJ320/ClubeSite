@@ -11,6 +11,10 @@
 
   <link rel="stylesheet" href="style.css">
 
+
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
 </head>
 
 <body>
@@ -35,46 +39,54 @@
 
 
 
-  <div class="calendar-container">
+  <div class="calendar-page">
 
-    <h1>📅 Agenda do Clube</h1>
+    <h1>📅 Calendário do Clube</h1>
 
 
 
-    <div class="calendar-form">
+    <div id="calendar"></div>
+
+  </div>
+
+
+
+  <div id="eventModal" class="modal">
+
+    <div class="modal-content">
+
+      <span id="closeModal">&times;</span>
+
+
 
       <input
         type="text"
-        id="dayInput"
-        placeholder="Dia do clube"
-      >
-
-
-
-      <input
-        type="text"
-        id="activityInput"
-        placeholder="Atividade"
+        id="eventTitle"
+        placeholder="Nome da atividade"
       >
 
 
 
       <textarea
-        id="noteInput"
-        placeholder="Observações"
+        id="eventDescription"
+        placeholder="Descrição"
       ></textarea>
 
 
 
-      <button id="saveEventBtn">
-        Salvar Agenda
+      <input
+        type="file"
+        id="eventImage"
+        accept="image/*"
+      >
+
+
+
+      <button id="saveEvent">
+        Salvar Evento
       </button>
 
     </div>
-
-
-
-    <div id="eventsList"></div>
 
   </div>
 
