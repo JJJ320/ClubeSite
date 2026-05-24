@@ -852,3 +852,122 @@ audio{
   }
 
 }
+
+/* VOTAÇÃO */
+
+.vote-page{
+
+  padding:30px;
+
+}
+
+
+.create-poll{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:15px;
+
+  margin-bottom:30px;
+
+}
+
+
+.create-poll input{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#1f1f1f;
+
+  color:white;
+
+  font-size:16px;
+
+}
+
+
+.create-poll button{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+}
+
+
+.poll-card{
+
+  background:#1a1a1a;
+
+  padding:20px;
+
+  border-radius:20px;
+
+  margin-bottom:20px;
+
+}
+
+
+.options{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+  margin-top:15px;
+
+}
+
+
+.options button{
+
+  padding:15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+}
+
+
+.delete-poll{
+
+  margin-top:20px;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#ff4d4d;
+
+  color:white;
+
+  cursor:pointer;
+
+}
