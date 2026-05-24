@@ -78,6 +78,22 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
+  height: "auto",
+
+
+
+  headerToolbar: {
+
+    left: "prev,next today",
+
+    center: "title",
+
+    right: "dayGridMonth,timeGridWeek,timeGridDay"
+
+  },
+
+
+
   dateClick(info){
 
     if(
@@ -94,6 +110,8 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
       modal.style.display = "flex";
 
+
+
       document.body.style.overflow = "hidden";
 
     }
@@ -108,7 +126,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-    let message =
+    let text =
 
       "📌 " + event.title +
 
@@ -118,7 +136,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-    alert(message);
+    alert(text);
 
 
 
@@ -137,6 +155,10 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
   }
 
 });
+
+
+
+calendar.render();
 
 
 
@@ -227,6 +249,10 @@ saveBtn.addEventListener("click", async () => {
 
 
   modal.style.display = "none";
+
+
+
+  document.body.style.overflow = "auto";
 
 
 

@@ -26,6 +26,12 @@ nav{
 
   align-items:center;
 
+  position:sticky;
+
+  top:0;
+
+  z-index:1000;
+
 }
 
 
@@ -34,6 +40,8 @@ nav{
   display:flex;
 
   gap:25px;
+
+  align-items:center;
 
 }
 
@@ -86,6 +94,8 @@ nav{
 
   color:white;
 
+  outline:none;
+
 }
 
 
@@ -105,12 +115,31 @@ nav{
 
   font-size:16px;
 
+  transition:0.2s;
+
 }
 
 
 #loginBtn:hover{
 
   opacity:0.9;
+
+}
+
+
+#logoutBtn{
+
+  padding:10px 15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#ff4d4d;
+
+  color:white;
+
+  cursor:pointer;
 
 }
 
@@ -132,7 +161,7 @@ nav{
 
   align-items:center;
 
-  gap:10px;
+  gap:12px;
 
 }
 
@@ -154,11 +183,13 @@ nav{
 
   font-size:16px;
 
+  font-weight:bold;
+
 }
 
 
 
-/* CONTEÚDO */
+/* HOME */
 
 .container{
 
@@ -371,6 +402,8 @@ audio{
 
   color:white;
 
+  outline:none;
+
 }
 
 
@@ -410,137 +443,6 @@ audio{
 
 /* CALENDÁRIO */
 
-.calendar-container{
-
-  padding:30px;
-
-}
-
-
-.calendar-form{
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:15px;
-
-  margin-bottom:30px;
-
-}
-
-
-.calendar-form input,
-
-.calendar-form textarea{
-
-  padding:15px;
-
-  border:none;
-
-  border-radius:10px;
-
-  background:#1f1f1f;
-
-  color:white;
-
-  font-size:16px;
-
-}
-
-
-.calendar-form textarea{
-
-  min-height:120px;
-
-  resize:vertical;
-
-}
-
-
-.calendar-form button{
-
-  padding:15px;
-
-  border:none;
-
-  border-radius:10px;
-
-  background:#5865F2;
-
-  color:white;
-
-  cursor:pointer;
-
-  font-size:16px;
-
-}
-
-
-#eventsList{
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:20px;
-
-}
-
-
-.event-card{
-
-  background:#1a1a1a;
-
-  padding:20px;
-
-  border-radius:15px;
-
-}
-
-
-.event-card h2{
-
-  margin:0;
-
-  font-size:28px;
-
-}
-
-
-.event-card h3{
-
-  margin-top:10px;
-
-  color:#5865F2;
-
-}
-
-
-.event-card p{
-
-  margin-top:10px;
-
-  font-size:16px;
-
-}
-
-#logoutBtn{
-
-  padding:10px 15px;
-
-  border:none;
-
-  border-radius:10px;
-
-  background:#ff4d4d;
-
-  color:white;
-
-  cursor:pointer;
-
-}
-
 .calendar-page{
 
   padding:30px;
@@ -552,14 +454,86 @@ audio{
 
   background:white;
 
+  border-radius:20px;
+
   padding:20px;
 
-  border-radius:20px;
+  min-height:800px;
+
+  color:black;
+
+  overflow:hidden;
+
+}
+
+
+.fc{
+
+  background:white;
 
   color:black;
 
 }
 
+
+.fc-toolbar-title{
+
+  color:black;
+
+  font-weight:bold;
+
+}
+
+
+.fc-button{
+
+  background:#5865F2 !important;
+
+  border:none !important;
+
+}
+
+
+.fc-button:hover{
+
+  opacity:0.9;
+
+}
+
+
+.fc-daygrid-day{
+
+  cursor:pointer;
+
+  transition:0.2s;
+
+}
+
+
+.fc-daygrid-day:hover{
+
+  background:#f0f0f0;
+
+}
+
+
+.fc-daygrid-event{
+
+  background:#5865F2 !important;
+
+  border:none !important;
+
+  padding:4px;
+
+  border-radius:6px;
+
+  font-size:13px;
+
+}
+
+
+
+/* MODAL */
 
 .modal{
 
@@ -606,6 +580,8 @@ audio{
 
   z-index:100000;
 
+  box-shadow:0 0 30px rgba(0,0,0,0.5);
+
 }
 
 
@@ -624,6 +600,8 @@ audio{
   color:white;
 
   font-size:16px;
+
+  outline:none;
 
 }
 
@@ -656,6 +634,13 @@ audio{
 }
 
 
+.modal-content button:hover{
+
+  opacity:0.9;
+
+}
+
+
 #closeModal{
 
   position:absolute;
@@ -667,5 +652,57 @@ audio{
   font-size:28px;
 
   cursor:pointer;
+
+}
+
+
+
+/* RESPONSIVO */
+
+@media(max-width:800px){
+
+  nav{
+
+    flex-direction:column;
+
+    gap:15px;
+
+  }
+
+
+
+  .nav-left{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+  }
+
+
+
+  .chat-input{
+
+    flex-direction:column;
+
+  }
+
+
+
+  .chat-image,
+
+  .chat-video{
+
+    max-width:100%;
+
+  }
+
+
+
+  .modal-content{
+
+    width:90%;
+
+  }
 
 }
