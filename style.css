@@ -706,3 +706,38 @@ audio{
   }
 
 }
+
+#viewImage{
+
+  width:100%;
+
+  border-radius:15px;
+
+  margin-top:15px;
+
+}
+
+
+#adminButtons{
+
+  display:flex;
+
+  gap:10px;
+
+  margin-top:20px;
+
+}
+
+
+#adminButtons button{
+
+  flex:1;
+
+}
+
+
+#deleteEventBtn{
+
+  background:#ff4d4d !important;
+
+}

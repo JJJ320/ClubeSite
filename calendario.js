@@ -8,7 +8,13 @@ import {
 
   addDoc,
 
-  onSnapshot
+  onSnapshot,
+
+  deleteDoc,
+
+  updateDoc,
+
+  doc
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -46,7 +52,13 @@ const role = localStorage.getItem("role");
 
 const modal = document.getElementById("eventModal");
 
+const viewModal = document.getElementById("viewModal");
+
+
+
 const closeModal = document.getElementById("closeModal");
+
+const closeViewModal = document.getElementById("closeViewModal");
 
 
 
@@ -60,7 +72,25 @@ const saveBtn = document.getElementById("saveEvent");
 
 
 
+const viewTitle = document.getElementById("viewTitle");
+
+const viewDescription = document.getElementById("viewDescription");
+
+const viewImage = document.getElementById("viewImage");
+
+
+
+const adminButtons = document.getElementById("adminButtons");
+
+const editEventBtn = document.getElementById("editEventBtn");
+
+const deleteEventBtn = document.getElementById("deleteEventBtn");
+
+
+
 let selectedDate = "";
+
+let selectedEventId = "";
 
 
 
@@ -110,10 +140,6 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
       modal.style.display = "flex";
 
-
-
-      document.body.style.overflow = "hidden";
-
     }
 
   },
@@ -126,31 +152,57 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-    let text =
+    selectedEventId = event.id;
 
-      "📌 " + event.title +
 
-      "\n\n" +
+
+    viewTitle.textContent = event.title;
+
+
+
+    viewDescription.textContent =
 
       event.extendedProps.description;
 
 
 
-    alert(text);
-
-
-
     if(event.extendedProps.image){
 
-      window.open(
+      viewImage.src = event.extendedProps.image;
 
-        event.extendedProps.image,
-
-        "_blank"
-
-      );
+      viewImage.style.display = "block";
 
     }
+
+    else{
+
+      viewImage.style.display = "none";
+
+    }
+
+
+
+    if(
+
+      role === "leader" ||
+
+      role === "director"
+
+    ){
+
+      adminButtons.style.display = "flex";
+
+    }
+
+    else{
+
+      adminButtons.style.display = "none";
+
+    }
+
+
+
+    viewModal.style.display = "flex";
 
   }
 
@@ -166,9 +218,13 @@ closeModal.addEventListener("click", () => {
 
   modal.style.display = "none";
 
+});
 
 
-  document.body.style.overflow = "auto";
+
+closeViewModal.addEventListener("click", () => {
+
+  viewModal.style.display = "none";
 
 });
 
@@ -252,15 +308,53 @@ saveBtn.addEventListener("click", async () => {
 
 
 
-  document.body.style.overflow = "auto";
-
-
-
   titleInput.value = "";
 
   descInput.value = "";
 
   imageInput.value = "";
+
+});
+
+
+
+deleteEventBtn.addEventListener("click", async () => {
+
+  await deleteDoc(
+
+    doc(db, "events", selectedEventId)
+
+  );
+
+
+
+  viewModal.style.display = "none";
+
+});
+
+
+
+editEventBtn.addEventListener("click", async () => {
+
+  const newTitle = prompt("Novo título:");
+
+
+
+  if(!newTitle) return;
+
+
+
+  await updateDoc(
+
+    doc(db, "events", selectedEventId),
+
+    {
+
+      title: newTitle
+
+    }
+
+  );
 
 });
 
@@ -272,13 +366,15 @@ onSnapshot(collection(db, "events"), (snapshot) => {
 
 
 
-  snapshot.forEach((doc) => {
+  snapshot.forEach((documento) => {
 
-    const data = doc.data();
+    const data = documento.data();
 
 
 
     calendar.addEvent({
+
+      id: documento.id,
 
       title: data.title,
 

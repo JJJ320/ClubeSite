@@ -51,13 +51,13 @@
 
 
 
+  <!-- MODAL CRIAR -->
+
   <div id="eventModal" class="modal">
 
     <div class="modal-content">
 
-      <span id="closeModal">
-        &times;
-      </span>
+      <span id="closeModal">&times;</span>
 
 
 
@@ -71,7 +71,7 @@
 
       <textarea
         id="eventDescription"
-        placeholder="Descrição da atividade"
+        placeholder="Descrição"
       ></textarea>
 
 
@@ -87,6 +87,48 @@
       <button id="saveEvent">
         Salvar Evento
       </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MODAL VER EVENTO -->
+
+  <div id="viewModal" class="modal">
+
+    <div class="modal-content">
+
+      <span id="closeViewModal">&times;</span>
+
+
+
+      <h2 id="viewTitle"></h2>
+
+
+
+      <img id="viewImage">
+
+
+
+      <p id="viewDescription"></p>
+
+
+
+      <div id="adminButtons">
+
+        <button id="editEventBtn">
+          Editar
+        </button>
+
+
+
+        <button id="deleteEventBtn">
+          Apagar
+        </button>
+
+      </div>
 
     </div>
 
