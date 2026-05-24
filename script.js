@@ -1,4 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
 
 import {
 
@@ -10,21 +14,17 @@ import {
 
   onAuthStateChanged,
 
-  signOut
+  signOut,
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  setPersistence,
 
-import {
+  browserLocalPersistence,
 
-  getFirestore,
+  updateProfile
 
-  doc,
+}
 
-  setDoc,
-
-  getDoc
-
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
@@ -52,121 +52,81 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-const db = getFirestore(app);
-
 
 
 const provider = new GoogleAuthProvider();
 
 
 
-const loginBtn = document.getElementById("loginBtn");
+const loginBtn =
 
-const userDiv = document.getElementById("user");
-
-const roleSelect = document.getElementById("roleSelect");
-
-const codeInput = document.getElementById("codeInput");
+  document.getElementById("loginBtn");
 
 
 
-const LEADER_CODE = "LIDER779";
+const userDiv =
 
-const DIRECTOR_CODE = "Acesso0255";
-
-
-
-codeInput.style.display = "none";
+  document.getElementById("user");
 
 
 
-roleSelect.addEventListener("change", () => {
+const roleSelect =
 
-  if(
-
-    roleSelect.value === "leader" ||
-
-    roleSelect.value === "director"
-
-  ){
-
-    codeInput.style.display = "block";
-
-  }
-
-  else{
-
-    codeInput.style.display = "none";
-
-  }
-
-});
+  document.getElementById("roleSelect");
 
 
 
-function mostrarUsuario(userData){
+const codeInput =
 
-  userDiv.innerHTML = `
-
-    <div class="user-info">
-
-      <img src="${userData.photo}">
+  document.getElementById("codeInput");
 
 
 
-      <div>
+const profileModal =
 
-        <div class="user-name">
-
-          ${userData.name}
-
-        </div>
+  document.getElementById("profileModal");
 
 
 
-        <small>
+const closeProfileModal =
 
-          ${userData.email}
-
-        </small>
+  document.getElementById("closeProfileModal");
 
 
 
-        <br>
+const newName =
+
+  document.getElementById("newName");
 
 
 
-        <small>
+const newPhoto =
 
-          Cargo: ${userData.role}
-
-        </small>
-
-      </div>
+  document.getElementById("newPhoto");
 
 
 
-      <button id="logoutBtn">
-        Sair
-      </button>
+const saveProfileBtn =
 
-    </div>
-
-  `;
+  document.getElementById("saveProfileBtn");
 
 
 
-  const logoutBtn = document.getElementById("logoutBtn");
+const LEADER_CODE = "lider123";
+
+const DIRECTOR_CODE = "diretor123";
 
 
 
-  logoutBtn.addEventListener("click", async () => {
+await setPersistence(
 
-    await signOut(auth);
+  auth,
 
-  });
+  browserLocalPersistence
 
-}
+);
+
+
 
 loginBtn.addEventListener("click", async () => {
 
@@ -174,29 +134,33 @@ loginBtn.addEventListener("click", async () => {
 
 
 
-  if(role === "leader"){
+  if(
 
-    if(codeInput.value !== LEADER_CODE){
+    role === "leader" &&
 
-      alert("Código de líder inválido");
+    codeInput.value !== LEADER_CODE
 
-      return;
+  ){
 
-    }
+    alert("Código de líder inválido");
+
+    return;
 
   }
 
 
 
-  if(role === "director"){
+  if(
 
-    if(codeInput.value !== DIRECTOR_CODE){
+    role === "director" &&
 
-      alert("Código de diretor inválido");
+    codeInput.value !== DIRECTOR_CODE
 
-      return;
+  ){
 
-    }
+    alert("Código de diretor inválido");
+
+    return;
 
   }
 
@@ -204,35 +168,22 @@ loginBtn.addEventListener("click", async () => {
 
   try{
 
-    const result = await signInWithPopup(auth, provider);
+    const result =
+
+      await signInWithPopup(auth, provider);
 
 
 
-    const user = result.user;
+    localStorage.setItem(
+
+      "role",
+
+      role
+
+    );
 
 
 
-await setDoc(
-
-  doc(db, "users", user.uid),
-
-  {
-
-    name: user.displayName,
-
-    email: user.email,
-
-    photo: user.photoURL,
-
-    role: role
-
-  }
-
-);
-
-
-
-localStorage.setItem("role", role);
   }
 
   catch(error){
@@ -247,29 +198,91 @@ localStorage.setItem("role", role);
 
 
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
 
   if(user){
 
     loginBtn.style.display = "none";
 
+
+
     roleSelect.style.display = "none";
+
+
 
     codeInput.style.display = "none";
 
 
 
-    const userRef = doc(db, "users", user.uid);
+    userDiv.innerHTML = `
 
-    const userSnap = await getDoc(userRef);
+      <div class="user-info">
+
+        <img src="${user.photoURL}">
 
 
 
-    if(userSnap.exists()){
+        <div>
 
-      mostrarUsuario(userSnap.data());
+          <div class="user-name">
 
-    }
+            ${user.displayName}
+
+          </div>
+
+
+
+          <div>
+
+            ${user.email}
+
+          </div>
+
+        </div>
+
+
+
+        <button id="editProfileBtn">
+
+          Editar Perfil
+
+        </button>
+
+
+
+        <button id="logoutBtn">
+
+          Sair
+
+        </button>
+
+      </div>
+
+    `;
+
+
+
+    document
+
+      .getElementById("logoutBtn")
+
+      .addEventListener("click", async () => {
+
+        await signOut(auth);
+
+      });
+
+
+
+    document
+
+      .getElementById("editProfileBtn")
+
+      .addEventListener("click", () => {
+
+        profileModal.style.display = "flex";
+
+      });
 
   }
 
@@ -277,12 +290,110 @@ onAuthStateChanged(auth, async (user) => {
 
     loginBtn.style.display = "block";
 
+
+
     roleSelect.style.display = "block";
+
+
+
+    codeInput.style.display = "block";
 
 
 
     userDiv.innerHTML = "";
 
   }
+
+});
+
+
+
+closeProfileModal.addEventListener("click", () => {
+
+  profileModal.style.display = "none";
+
+});
+
+
+
+async function uploadToCloudinary(file){
+
+  const formData = new FormData();
+
+
+
+  formData.append("file", file);
+
+  formData.append("upload_preset", "chat_upload");
+
+
+
+  const response = await fetch(
+
+    "https://api.cloudinary.com/v1_1/dlmrbca0i/auto/upload",
+
+    {
+
+      method:"POST",
+
+      body:formData
+
+    }
+
+  );
+
+
+
+  const data = await response.json();
+
+
+
+  return data.secure_url;
+
+}
+
+
+
+saveProfileBtn.addEventListener("click", async () => {
+
+  const user = auth.currentUser;
+
+
+
+  if(!user) return;
+
+
+
+  let photoURL = user.photoURL;
+
+
+
+  if(newPhoto.files[0]){
+
+    photoURL = await uploadToCloudinary(
+
+      newPhoto.files[0]
+
+    );
+
+  }
+
+
+
+  await updateProfile(user, {
+
+    displayName:
+
+      newName.value || user.displayName,
+
+
+
+    photoURL: photoURL
+
+  });
+
+
+
+  location.reload();
 
 });

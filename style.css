@@ -148,6 +148,23 @@ nav{
 }
 
 
+#editProfileBtn{
+
+  padding:10px 15px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#5865F2;
+
+  color:white;
+
+  cursor:pointer;
+
+}
+
+
 #user{
 
   display:flex;
@@ -166,6 +183,8 @@ nav{
   align-items:center;
 
   gap:12px;
+
+  flex-wrap:wrap;
 
 }
 
@@ -539,6 +558,61 @@ audio{
 
 
 
+/* HOJE */
+
+.fc-day-today{
+
+  position:relative;
+
+}
+
+
+.fc-day-today::after{
+
+  content:"HOJE";
+
+
+
+  position:absolute;
+
+
+
+  top:50%;
+
+  left:50%;
+
+
+
+  transform:translate(-50%, -50%);
+
+
+
+  background:#5865F2;
+
+  color:white;
+
+
+
+  font-size:11px;
+
+  font-weight:bold;
+
+
+
+  padding:4px 10px;
+
+  border-radius:20px;
+
+
+
+  pointer-events:none;
+
+  opacity:0.9;
+
+}
+
+
+
 /* MODAL */
 
 .modal{
@@ -697,7 +771,9 @@ audio{
 
 #closeModal,
 
-#closeViewModal{
+#closeViewModal,
+
+#closeProfileModal{
 
   position:absolute;
 
@@ -774,62 +850,5 @@ audio{
     font-size:18px;
 
   }
-
-}
-
-.fc-day-today{
-
-  position:relative;
-
-}
-
-.fc-day-today{
-
-  position:relative;
-
-}
-
-
-.fc-day-today::after{
-
-  content:"HOJE";
-
-
-
-  position:absolute;
-
-
-
-  top:50%;
-
-  left:50%;
-
-
-
-  transform:translate(-50%, -50%);
-
-
-
-  background:#5865F2;
-
-  color:white;
-
-
-
-  font-size:11px;
-
-  font-weight:bold;
-
-
-
-  padding:4px 10px;
-
-  border-radius:20px;
-
-
-
-  pointer-events:none;
-
-  opacity:0.9;
 
 }
