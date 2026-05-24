@@ -68,6 +68,10 @@ const descInput = document.getElementById("eventDescription");
 
 const imageInput = document.getElementById("eventImage");
 
+const startTimeInput = document.getElementById("eventStartTime");
+
+const endTimeInput = document.getElementById("eventEndTime");
+
 const saveBtn = document.getElementById("saveEvent");
 
 
@@ -112,57 +116,58 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
 
 
 
-headerToolbar: {
+  headerToolbar: {
 
-  left: "prev,next hoje",
+    left: "prev,next hoje",
 
-  center: "title",
+    center: "title",
 
-  right: "mes,semana,dia"
-
-},
-
-
-
-buttonText: {
-
-  hoje: "Hoje",
-
-  mes: "Mês",
-
-  semana: "Semana",
-
-  dia: "Dia"
-
-},
-
-
-
-views: {
-
-  mes: {
-
-    type: "dayGridMonth"
+    right: "mes,semana,dia"
 
   },
 
 
 
-  semana: {
+  buttonText: {
 
-    type: "timeGridWeek"
+    hoje: "Hoje",
+
+    mes: "Mês",
+
+    semana: "Semana",
+
+    dia: "Dia"
 
   },
 
 
 
-  dia: {
+  views: {
 
-    type: "timeGridDay"
+    mes: {
 
-  }
+      type: "dayGridMonth"
 
-},
+    },
+
+
+
+    semana: {
+
+      type: "timeGridWeek"
+
+    },
+
+
+
+    dia: {
+
+      type: "timeGridDay"
+
+    }
+
+  },
+
 
 
   dateClick(info){
@@ -197,6 +202,10 @@ views: {
 
       imageInput.value = "";
 
+      startTimeInput.value = "";
+
+      endTimeInput.value = "";
+
 
 
       saveBtn.onclick = salvarNovoEvento;
@@ -221,9 +230,33 @@ views: {
 
 
 
-    viewDescription.textContent =
+    viewDescription.innerHTML = `
 
-      event.extendedProps.description || "";
+      ${event.extendedProps.description || ""}
+
+      <br><br>
+
+      🕒 Início:
+      ${new Date(event.start).toLocaleTimeString(
+        "pt-BR",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      )}
+
+      <br>
+
+      🕓 Fim:
+      ${new Date(event.end).toLocaleTimeString(
+        "pt-BR",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      )}
+
+    `;
 
 
 
@@ -367,9 +400,31 @@ async function salvarNovoEvento(){
 
     title: titleInput.value,
 
+
+
     description: descInput.value,
 
-    date: selectedDate,
+
+
+    start:
+
+      selectedDate +
+
+      "T" +
+
+      startTimeInput.value,
+
+
+
+    end:
+
+      selectedDate +
+
+      "T" +
+
+      endTimeInput.value,
+
+
 
     image: imageUrl
 
@@ -390,6 +445,10 @@ async function salvarNovoEvento(){
   descInput.value = "";
 
   imageInput.value = "";
+
+  startTimeInput.value = "";
+
+  endTimeInput.value = "";
 
 }
 
@@ -443,6 +502,18 @@ editEventBtn.addEventListener("click", async () => {
 
 
 
+  startTimeInput.value =
+
+    event.start.toTimeString().slice(0,5);
+
+
+
+  endTimeInput.value =
+
+    event.end.toTimeString().slice(0,5);
+
+
+
   modal.style.display = "flex";
 
 
@@ -479,7 +550,31 @@ editEventBtn.addEventListener("click", async () => {
 
         title: titleInput.value,
 
+
+
         description: descInput.value,
+
+
+
+        start:
+
+          selectedDate +
+
+          "T" +
+
+          startTimeInput.value,
+
+
+
+        end:
+
+          selectedDate +
+
+          "T" +
+
+          endTimeInput.value,
+
+
 
         image: imageUrl
 
@@ -502,6 +597,10 @@ editEventBtn.addEventListener("click", async () => {
     descInput.value = "";
 
     imageInput.value = "";
+
+    startTimeInput.value = "";
+
+    endTimeInput.value = "";
 
 
 
@@ -533,11 +632,23 @@ onSnapshot(collection(db, "events"), (snapshot) => {
 
       id: documento.id,
 
+
+
       title: data.title,
 
-      start: data.date,
+
+
+      start: data.start,
+
+
+
+      end: data.end,
+
+
 
       description: data.description,
+
+
 
       image: data.image
 
